@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emberline Canyon Post — a bush-pilot flight game</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0b1622; font-family: "Segoe UI", system-ui, sans-serif; }
+  #game { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  .hud { position: fixed; color: #eaf6ff; text-shadow: 0 1px 3px rgba(0,0,0,.8); pointer-events: none; }
+  #tape { top: 10px; left: 50%; transform: translateX(-50%); font-size: 15px; letter-spacing: 2px; background: rgba(8,20,32,.45); padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(140,210,255,.35); }
+  #left { left: 14px; top: 64px; font-size: 15px; line-height: 1.5; background: rgba(8,20,32,.45); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(140,210,255,.3); min-width: 150px; }
+  #right { right: 14px; top: 64px; font-size: 15px; line-height: 1.5; text-align: right; background: rgba(8,20,32,.45); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(140,210,255,.3); min-width: 150px; }
+  .big { font-size: 24px; font-weight: 700; }
+  .bar { height: 8px; background: rgba(255,255,255,.18); border-radius: 4px; margin: 3px 0 7px; overflow: hidden; }
+  .bar > div { height: 100%; background: #57d977; }
+  #fuelbar > div { background: #ffb84d; }
+  #mission { bottom: 64px; left: 50%; transform: translateX(-50%); text-align: center; font-size: 16px; background: rgba(8,20,32,.5); padding: 6px 16px; border-radius: 8px; border: 1px solid rgba(255,200,110,.4); }
+  #message { bottom: 110px; left: 50%; transform: translateX(-50%); font-size: 22px; font-weight: 700; color: #ffd98a; }
+  #help { bottom: 10px; left: 50%; transform: translateX(-50%); font-size: 13px; opacity: .85; white-space: nowrap; }
+  #panel { position: fixed; bottom: 0; left: 0; right: 0; height: 150px; display: none; background: linear-gradient(#2b3138, #16191e); border-top: 3px solid #454e59; pointer-events: none; }
+  #panel canvas { display: block; margin: 6px auto 0; }
+  #title { top: 34%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+  #title h1 { font-size: 44px; margin: 0; color: #ffd98a; letter-spacing: 3px; }
+  #title p { font-size: 16px; margin: 6px 0 0; }
+  #status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+</style>
+</head>
+<body>
+<canvas id="game" aria-label="Emberline Canyon Post: fly a bush plane over Emberline Island, run the ring course, drop cargo, and land on the strip"></canvas>
+<div class="hud" id="tape">HDG 000</div>
+<div class="hud" id="left">
+  <div>ALT <span class="big" id="alt">0</span> ft</div>
+  <div>AGL <span id="agl">0</span> ft</div>
+  <div>THR</div><div class="bar" id="thrbar"><div style="width:0%"></div></div>
+  <div>FUEL</div><div class="bar" id="fuelbar"><div style="width:100%"></div></div>
+</div>
+<div class="hud" id="right">
+  <div>SPD <span class="big" id="spd">0</span> kt</div>
+  <div>V/S <span id="vs">0</span> fpm</div>
+  <div>DMG <span id="dmg">0</span>%</div>
+  <div id="clock">0:00</div>
+</div>
+<div class="hud" id="message"></div>
+<div class="hud" id="mission">Mission: Ring Run — fly through the rings in order</div>
+<div class="hud" id="help">Mouse / arrows: pitch &amp; roll · W/S or Shift/Ctrl: throttle · C: camera · 1/2/3: mission · Space: drop cargo · R: restart</div>
+<div class="hud" id="title"><h1>EMBERLINE CANYON POST</h1><p>Click or press any key to fly</p></div>
+<div id="panel"><canvas id="gauges" width="640" height="138"></canvas></div>
+<p id="status" role="status" aria-live="polite"></p>
+<script src="./vendor/three.min.js"></script>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
